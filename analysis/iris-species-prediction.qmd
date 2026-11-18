@@ -1,0 +1,39 @@
+---
+title: "Predicting Iris Species from Flower Measurements"
+author: "Cesar Figueroa, Nick Petersen, Parva Fazeli Farsani, Qibing He"
+date: today
+format:
+  html:
+    toc: true
+  pdf:
+    toc: true
+bibliography: references.bib
+execute:
+  echo: true
+---
+
+## Summary
+
+## Introduction
+
+## Methods
+
+### Data download
+
+```{python}
+import os
+import urllib.request
+
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+raw_dir = "../data/raw"
+raw_path = os.path.join(raw_dir, "iris.data")
+
+os.makedirs(raw_dir, exist_ok=True)
+urllib.request.urlretrieve(url, raw_path)
+```
+
+## Results
+
+## Discussion
+
+## References
