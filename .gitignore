@@ -1,0 +1,6 @@
+.DS_Store
+.venv/
+.quarto/
+_freeze/
+__pycache__/
+.ipynb_checkpoints/
