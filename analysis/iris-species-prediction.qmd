@@ -25,15 +25,13 @@ execute:
 ### Data download
 
 ```{python}
-import os
-import urllib.request
+import pandas as pd
 
 url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
-raw_dir = "../data/raw"
-raw_path = os.path.join(raw_dir, "iris.data")
+raw_path = "../data/raw/iris.data"
 
-os.makedirs(raw_dir, exist_ok=True)
-urllib.request.urlretrieve(url, raw_path)
+iris_raw = pd.read_csv(url, header=None)
+iris_raw.to_csv(raw_path, header=False, index=False)
 ```
 
 ### Data cleaning
@@ -47,9 +45,7 @@ iris = pd.read_csv(raw_path, header=None, names=column_names)
 iris = iris.dropna(how="all")
 iris["species"] = iris["species"].str.replace("Iris-", "", regex=False)
 
-processed_dir = "../data/processed"
-os.makedirs(processed_dir, exist_ok=True)
-iris.to_csv(os.path.join(processed_dir, "iris_clean.csv"), index=False)
+iris.to_csv("../data/processed/iris_clean.csv", index=False)
 
 iris.shape
 ```
@@ -63,8 +59,8 @@ train_df, test_df = train_test_split(
     iris, test_size=0.3, stratify=iris["species"], random_state=522
 )
 
-train_df.to_csv(os.path.join(processed_dir, "iris_train.csv"), index=False)
-test_df.to_csv(os.path.join(processed_dir, "iris_test.csv"), index=False)
+train_df.to_csv("../data/processed/iris_train.csv", index=False)
+test_df.to_csv("../data/processed/iris_test.csv", index=False)
 
 train_df["species"].value_counts()
 ```
