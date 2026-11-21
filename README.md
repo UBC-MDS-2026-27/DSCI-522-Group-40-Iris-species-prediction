@@ -10,12 +10,14 @@ The dataset contains 150 flowers from three species: Setosa, Versicolor, and Vir
 
 The goal is to investigate how accurately machine learning models can classify Iris species using these measurements.
 
+
 ## Authors
 
-- Cesar Figueroa
-- Nick Petersen
-- Parva Fazeli Farsani
-- Qibing He
+- [Cesar Figueroa](https://github.com/cfigue09)
+- [Nick Petersen](https://github.com/Nick-Petersen)
+- [Parva Fazeli Farsani](https://github.com/ParvaFarsani)
+- [Qibing He](https://github.com/AlexHe03)
+
 
 ## Methods
 
@@ -88,13 +90,14 @@ The rendered report will be saved to:
 
 Open the HTML file in a web browser to view the analysis, visualizations, and results.
 
-**Note:** The macOS instructions have been tested successfully. The Windows instructions still need to be tested on a Windows computer.
+**Note:** The repository setup and Quarto rendering instructions have been successfully tested on both macOS and Windows.
 
 ## Results
 
 The logistic regression model achieved approximately **97.8% accuracy** on the held-out test set, correctly classifying 44 out of 45 observations.
 
 The results suggest that sepal and petal measurements can be used to distinguish the three Iris species with high accuracy on this dataset. However, the dataset is small, so these results may not generalize to more diverse flower populations or measurement conditions.
+
 
 ## Project Structure
 
@@ -111,6 +114,8 @@ The results suggest that sepal and petal measurements can be used to distinguish
 │       ├── iris_clean.csv
 │       ├── iris_train.csv
 │       └── iris_test.csv
+├── CODE_OF_CONDUCT.md
+├── LICENSE.md
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
@@ -118,13 +123,14 @@ The results suggest that sepal and petal measurements can be used to distinguish
 └── README.md
 ```
 
-Other repository documentation, including contribution guidelines, the code of conduct, and licensing information, is maintained in the repository as it becomes available.
+The `docs/` directory, which will contain the published GitHub Pages report, is being prepared in a separate pull request.
+
 
 ## Published Report
 
-The Quarto report is available locally at `analysis/iris-species-prediction.html`.
+The rendered Quarto report is available in the repository at `analysis/iris-species-prediction.html`.
 
-A GitHub Pages link will be added once the report has been published.
+The GitHub Pages version of the report is being prepared in a separate pull request and will be linked here once it is published.
 
 ## References
 
@@ -134,9 +140,11 @@ These include the UCI Iris dataset, Fisher (1936), Pedregosa et al. (2011), and 
 
 ## License
 
-The planned licenses are MIT for the project code and Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) for the report, subject to confirmation in `LICENSE.md`.
+The project code is licensed under the MIT License.
 
-Please refer to `LICENSE.md` for the final license terms once that file is merged into the repository.
+The original report text, figures, and tables are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license.
+
+See [LICENSE.md](LICENSE.md) for details.
 
 ## Generative AI Use
 
