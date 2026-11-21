@@ -26,6 +26,16 @@ This analysis shows how relatively simple classification methods can identify pa
 
 ## Methods
 
+The Iris dataset was obtained from the UCI Machine Learning Repository and contains 150 flowers from three species: setosa, versicolor, and virginica. Each flower has four measurements in centimetres: sepal length, sepal width, petal length, and petal width. The goal is to predict the species using these measurements.
+
+The dataset was downloaded and saved locally. During cleaning, empty rows were removed and species names were simplified. The cleaned data was then divided into training (70%) and test (30%) sets using stratified sampling to keep the proportion of each species. A random seed of 522 was used for reproducibility.
+
+Exploratory data analysis was performed only on the training data to avoid data leakage. We calculated the mean and standard deviation of each measurement by species, examined their distributions using histograms, and created a scatter plot comparing petal length and width.
+
+Three classification models were compared: a dummy classifier, k-nearest neighbours (kNN), and logistic regression. The dummy classifier provided a baseline, while kNN classified flowers using their five nearest neighbours. The measurements were standardized for kNN and logistic regression using pipelines to prevent data leakage during cross-validation.
+
+We compared the models using five-fold cross-validation, evaluating their mean accuracy and variation across folds. Accuracy was chosen because the species are equally represented in the dataset. Logistic regression was selected because it achieved similar accuracy to kNN with less variation. Finally, the selected model was evaluated on the held-out test set using accuracy and a confusion matrix.
+
 ### Data download
 
 ```{python}
