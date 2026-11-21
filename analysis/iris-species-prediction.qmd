@@ -183,6 +183,8 @@ pd.crosstab(
 )
 ```
 
+The exploratory data analysis revealed differences in flower measurements across the three iris species. As shown in @tbl-summary, setosa had the smallest average petal length (1.44 cm) and width (0.23 cm), followed by versicolor (4.24 cm and 1.33 cm) and virginica (5.49 cm and 2.04 cm). The distributions in @fig-distributions showed that petal measurements separated the species more clearly than sepal measurements, which had lots of overlap. Similarly, the scatter plot in @fig-petals showed that setosa formed a distinct cluster, while versicolor and virginica had more overlap. These findings suggest that petal measurements are particularly useful for distinguishing iris species.
+
 As shown in @tbl-cv, both k-nearest neighbours and logistic regression achieved a mean cross-validation accuracy of 94.3%, substantially outperforming the dummy classifier's accuracy of 33.3%. Logistic regression had a slightly lower standard deviation across validation folds (0.047 compared with 0.056), indicating more consistent performance.
 
 The final logistic regression model achieved 97.8% accuracy on the held-out test set, correctly classifying 44 out of 45 flowers. The confusion matrix in @tbl-confusion shows that all 15 setosa and 15 versicolor flowers were classified correctly, while one of the 15 virginica flowers was incorrectly classified as versicolor.
