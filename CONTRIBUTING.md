@@ -21,11 +21,11 @@ git switch -c fix-report-caption
 
 Keep the change focused on its issue. Check the output before committing, stage the intended files, and use a commit message that describes the change. Push to your branch and use a pull request to bring the changes into `main`.
 
-For a change that affects the analysis or report, run these commands from the repository root with uv and Quarto installed.
+For a change that affects the analysis or report, run these commands from the repository root on macOS with uv and Quarto installed.
 
 ```bash
 uv sync --locked
-uv run quarto render analysis/iris-species-prediction.qmd
+QUARTO_PYTHON="$(pwd)/.venv/bin/python3" quarto render analysis/iris-species-prediction.qmd --to html
 ```
 
 Open the rendered HTML and check that the sections, tables, and plots affected by your change still look right. For a documentation-only change, preview the Markdown and check edited links or commands.
@@ -38,4 +38,8 @@ Open the rendered HTML and check that the sections, tables, and plots affected b
 
 ## Generative AI policy
 
-You may use generative AI tools to brainstorm, understand concepts, debug problems, or help draft code and documentation, subject to any instructions for the specific assessment. Check the correctness and licensing of AI-assisted material, test changes that affect the analysis, and be ready to explain everything you submit. Keep confidential, personal, and sensitive information out of AI tools. Follow the [DSCI 522 generative AI policy](https://ubc-mds.github.io/DSCI_522_dsci-workflows_students/#use-of-generative-ai) for the full course requirements.
+You may use generative AI tools to brainstorm, understand concepts, debug problems, or help draft code and documentation, subject to any instructions for the specific assessment. Check the correctness and licensing of AI-assisted material, test changes that affect the analysis, and be ready to explain everything you submit. Keep confidential, personal, and sensitive information out of AI tools.
+
+Team members are responsible for opening issues and pull requests, pushing changes, reviewing each other's work, and making final decisions about merging. Write issues, pull request descriptions, and review comments in your own words. You may use AI to help with translation or grammar.
+
+Follow the [DSCI 522 generative AI policy](https://ubc-mds.github.io/DSCI_522_dsci-workflows_students/#use-of-generative-ai) for the full course requirements.
