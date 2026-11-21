@@ -2298,7 +2298,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<!-- Qibing: one paragraph — question, findings, significance, limitations. Write last. -->
+<p>This project investigates whether iris flower species can be predicted from four sepal and petal measurements using supervised machine learning. Using the Iris dataset containing 150 observations across three species, we compared a dummy classifier, k-nearest neighbours, and logistic regression. Both k-nearest neighbours and logistic regression achieved approximately 94.3% mean accuracy during five-fold cross-validation. Logistic regression was selected for final evaluation because its cross-validation performance was slightly more consistent. On the held-out test set of 45 observations, logistic regression achieved 97.8% accuracy, correctly classifying 44 flowers. The only misclassification involved a virginica flower predicted as versicolor. These results suggest that simple classification models can distinguish iris species effectively using physical measurements. However, the small dataset and evaluation using a single train-test split limit how confidently these results can be generalized to other populations or measurement conditions.</p>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -2316,19 +2316,22 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <p>We compared the models using five-fold cross-validation, evaluating their mean accuracy and variation across folds. Accuracy was chosen because the species are equally represented in the dataset. Logistic regression was selected because it achieved similar accuracy to kNN with less variation. Finally, the selected model was evaluated on the held-out test set using accuracy and a confusion matrix.</p>
 <section id="data-download" class="level3">
 <h3 class="anchored" data-anchor-id="data-download">Data download</h3>
-<div id="06fd9776" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div id="4805e55d" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&quot;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>raw_path <span class="op">=</span> <span class="st">&quot;../data/raw/iris.data&quot;</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>iris_raw <span class="op">=</span> pd.read_csv(url, header<span class="op">=</span><span class="va">None</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>iris_raw.to_csv(raw_path, header<span class="op">=</span><span class="va">False</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url, timeout<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>response.raise_for_status()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(raw_path, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    f.write(response.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="data-cleaning" class="level3">
 <h3 class="anchored" data-anchor-id="data-cleaning">Data cleaning</h3>
-<div id="36b15cc9" class="cell" data-execution_count="2">
+<div id="60d34b4e" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>column_names <span class="op">=</span> [<span class="st">&quot;sepal_length&quot;</span>, <span class="st">&quot;sepal_width&quot;</span>, <span class="st">&quot;petal_length&quot;</span>, <span class="st">&quot;petal_width&quot;</span>, <span class="st">&quot;species&quot;</span>]</span>
@@ -2347,7 +2350,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="traintest-split" class="level3">
 <h3 class="anchored" data-anchor-id="traintest-split">Train/test split</h3>
-<div id="f1c4de84" class="cell" data-execution_count="3">
+<div id="64d7c071" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>train_df, test_df <span class="op">=</span> train_test_split(</span>
@@ -2480,22 +2483,22 @@ Table 1: Mean and standard deviation (cm) of each measurement by species in the
 <div aria-describedby="fig-distributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <style>
-#altair-viz-67919bdcc7014127a1886a8708aa86df.vega-embed {
+#altair-viz-9297e990cd984cd2a8b76ae72e796648.vega-embed {
 width: 100%;
 display: flex;
 }
-#altair-viz-67919bdcc7014127a1886a8708aa86df.vega-embed details,
-#altair-viz-67919bdcc7014127a1886a8708aa86df.vega-embed details summary {
+#altair-viz-9297e990cd984cd2a8b76ae72e796648.vega-embed details,
+#altair-viz-9297e990cd984cd2a8b76ae72e796648.vega-embed details summary {
 position: relative;
 }
 </style>
-<div id="altair-viz-67919bdcc7014127a1886a8708aa86df"></div>
+<div id="altair-viz-9297e990cd984cd2a8b76ae72e796648"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-67919bdcc7014127a1886a8708aa86df") {
-      outputDiv = document.getElementById("altair-viz-67919bdcc7014127a1886a8708aa86df");
+    if (outputDiv.id !== "altair-viz-9297e990cd984cd2a8b76ae72e796648") {
+      outputDiv = document.getElementById("altair-viz-9297e990cd984cd2a8b76ae72e796648");
     }
 
     const paths = {
@@ -2563,22 +2566,22 @@ Figure 1: Distribution of each flower measurement by species in the training da
 <div aria-describedby="fig-petals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <style>
-#altair-viz-e72092e190264a6d9c517b596bf98de8.vega-embed {
+#altair-viz-66e5f67478724b3f8112905197fe211b.vega-embed {
 width: 100%;
 display: flex;
 }
-#altair-viz-e72092e190264a6d9c517b596bf98de8.vega-embed details,
-#altair-viz-e72092e190264a6d9c517b596bf98de8.vega-embed details summary {
+#altair-viz-66e5f67478724b3f8112905197fe211b.vega-embed details,
+#altair-viz-66e5f67478724b3f8112905197fe211b.vega-embed details summary {
 position: relative;
 }
 </style>
-<div id="altair-viz-e72092e190264a6d9c517b596bf98de8"></div>
+<div id="altair-viz-66e5f67478724b3f8112905197fe211b"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e72092e190264a6d9c517b596bf98de8") {
-      outputDiv = document.getElementById("altair-viz-e72092e190264a6d9c517b596bf98de8");
+    if (outputDiv.id !== "altair-viz-66e5f67478724b3f8112905197fe211b") {
+      outputDiv = document.getElementById("altair-viz-66e5f67478724b3f8112905197fe211b");
     }
 
     const paths = {
@@ -2724,7 +2727,7 @@ Table 2: 5-fold cross-validation accuracy on the training data.
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<div id="b2cc6f12" class="cell" data-execution_count="8">
+<div id="efac7b54" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="op">=</span> models[<span class="st">&quot;Logistic regression&quot;</span>].fit(X_train, y_train)</span>
