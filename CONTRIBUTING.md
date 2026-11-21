@@ -42,4 +42,4 @@ You may use generative AI tools to brainstorm, understand concepts, debug proble
 
 Team members are responsible for opening issues and pull requests, pushing changes, reviewing each other's work, and making final decisions about merging. Write issues, pull request descriptions, and review comments in your own words. You may use AI to help with translation or grammar.
 
-Follow the [DSCI 522 generative AI policy](https://ubc-mds.github.io/DSCI_522_dsci-workflows_students/#use-of-generative-ai) for the full course requirements.
+Follow the [DSCI 522 generative AI policy](https://ubc-mds.github.io/DSCI_522_dsci-workflows_students/#use-of-generative-ai) for the full course requirements. Contributors must disclose any AI use in the pull request description, and the team summarizes it in the README’s AI use statement.
