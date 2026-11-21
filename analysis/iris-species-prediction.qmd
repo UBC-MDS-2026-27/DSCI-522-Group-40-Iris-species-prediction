@@ -41,13 +41,16 @@ We compared the models using five-fold cross-validation, evaluating their mean a
 ### Data download
 
 ```{python}
-import pandas as pd
+import requests
 
 url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
 raw_path = "../data/raw/iris.data"
 
-iris_raw = pd.read_csv(url, header=None)
-iris_raw.to_csv(raw_path, header=False, index=False)
+response = requests.get(url, timeout=30)
+response.raise_for_status()
+
+with open(raw_path, "wb") as f:
+    f.write(response.content)
 ```
 
 ### Data cleaning

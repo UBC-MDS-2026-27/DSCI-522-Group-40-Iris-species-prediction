@@ -447,6 +447,7 @@ dependencies = [
     { name = "altair" },
     { name = "jupyter" },
     { name = "pandas" },
+    { name = "requests" },
     { name = "scikit-learn" },
 ]
 
@@ -455,6 +456,7 @@ requires-dist = [
     { name = "altair", specifier = ">=6.3.0" },
     { name = "jupyter", specifier = ">=1.1.1" },
     { name = "pandas", specifier = ">=3.1.1" },
+    { name = "requests", specifier = ">=2.34.2" },
     { name = "scikit-learn", specifier = ">=1.9.1" },
 ]
 
