@@ -183,7 +183,11 @@ pd.crosstab(
 )
 ```
 
-<!-- Nick: Results text — refer to @tbl-cv, @tbl-confusion and the test accuracy. -->
+As shown in @tbl-cv, both k-nearest neighbours and logistic regression achieved a mean cross-validation accuracy of 94.3%, substantially outperforming the dummy classifier's accuracy of 33.3%. Logistic regression had a slightly lower standard deviation across validation folds (0.047 compared with 0.056), indicating more consistent performance.
+
+The final logistic regression model achieved 97.8% accuracy on the held-out test set, correctly classifying 44 out of 45 flowers. The confusion matrix in @tbl-confusion shows that all 15 setosa and 15 versicolor flowers were classified correctly, while one of the 15 virginica flowers was incorrectly classified as versicolor.
+
+Overall, these results indicate that the four flower measurements can predict iris species with very high accuracy, although a little confusion remains between virginica and versicolor.
 
 ## Discussion
 
