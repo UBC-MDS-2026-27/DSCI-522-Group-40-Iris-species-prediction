@@ -90,7 +90,7 @@ The rendered report will be saved to:
 
 Open the HTML file in a web browser to view the analysis, visualizations, and results.
 
-**Note:** The complete Quarto report has been successfully rendered on macOS. The updated data download using `requests` has been tested successfully on Windows (PR #33). Full Quarto rendering on Windows has not yet been independently confirmed.
+**Note:** The repository setup and complete Quarto report rendering have been successfully tested on both macOS and Windows.
 
 ## Results
 
