@@ -171,6 +171,12 @@ pd.crosstab(
 
 ## Discussion
 
-<!-- Parva: findings vs question and expectations; assumptions, limitations, impact, future questions. -->
+The results show that sepal and petal measurements can be used to classify Iris flower species with high accuracy. Both k-nearest neighbours and logistic regression achieved a mean validation accuracy of approximately 94.3%, performing much better than the dummy classifier, which achieved 33.3%. The final logistic regression model correctly classified 44 out of 45 flowers in the test set, giving an accuracy of 97.8%. These results suggest that the measurements provide useful information for distinguishing between the three Iris species.
+
+The high accuracy was expected because the exploratory analysis showed differences in flower measurements across species, particularly in petal length and petal width. The confusion matrix also shows that all Setosa and Versicolor flowers were correctly classified, while one Virginica flower was incorrectly classified as Versicolor. This suggests that some species are easier to distinguish than others based on their measurements.
+
+There are several limitations to this analysis. First, the dataset contains only 150 observations, with 45 flowers in the test set. As a result, the test accuracy may change if the model is evaluated on a different sample. Second, the dataset includes only three Iris species and four numerical measurements, so the results may not generalize to other species or flowers collected under different conditions. Finally, although logistic regression performed well, other classification models or different model settings could produce different results.
+
+Overall, this analysis shows that relatively simple machine learning models can classify Iris species accurately using flower measurements. Similar approaches could be useful for identifying plant species when reliable measurements are available. Future work could involve testing the models on larger and more diverse datasets, comparing additional classification methods, and investigating which flower measurements contribute most to the predictions.
 
 ## References
