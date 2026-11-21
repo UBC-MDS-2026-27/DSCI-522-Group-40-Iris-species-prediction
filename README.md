@@ -146,14 +146,18 @@ The original report text, figures, and tables are licensed under the Creative Co
 
 See [LICENSE.md](LICENSE.md) for details.
 
+
 ## Generative AI Use
 
-Generative AI tools, including ChatGPT, were used to assist with documentation drafting, Git workflow guidance, troubleshooting, and reviewing reproducibility instructions.
+Generative AI tools, including ChatGPT and Claude, were used to assist with documentation drafting, Git workflow guidance, troubleshooting, and reviewing reproducibility instructions.
 
-All AI-assisted content and technical suggestions should be reviewed and verified by the project contributors before inclusion.
+ChatGPT was used to support documentation, Git and GitHub workflows, and troubleshooting. Claude was used to suggest a solution to the SSL certificate verification issue encountered when downloading the Iris dataset on Windows.
 
-Examples of prompts used during the project include:
+AI-assisted content and technical suggestions were reviewed and tested by project contributors before inclusion.
+
+Examples of AI prompts and troubleshooting questions used during the project include:
 
 - "Help write reproducibility instructions for a Python project using uv and Quarto."
 - "How can I troubleshoot a Quarto report that times out while starting a Jupyter kernel?"
 - "Suggest relevant academic references for an Iris species classification report."
+- Windows SSL certificate verification troubleshooting (Claude; exact prompt not recorded).
