@@ -5,35 +5,172 @@ date: today
 format:
   html:
     toc: true
-  pdf:
-    toc: true
+    embed-resources: true
 bibliography: references.bib
 execute:
   echo: true
+  warning: false
 ---
 
 ## Summary
 
+<!-- Qibing: one paragraph — question, findings, significance, limitations. Write last. -->
+
 ## Introduction
+
+<!-- Cesar: background, why it matters, question, dataset (source, rows, variables, citation), target variable. -->
 
 ## Methods
 
 ### Data download
 
 ```{python}
-import os
-import urllib.request
+import pandas as pd
 
 url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
-raw_dir = "../data/raw"
-raw_path = os.path.join(raw_dir, "iris.data")
+raw_path = "../data/raw/iris.data"
 
-os.makedirs(raw_dir, exist_ok=True)
-urllib.request.urlretrieve(url, raw_path)
+iris_raw = pd.read_csv(url, header=None)
+iris_raw.to_csv(raw_path, header=False, index=False)
+```
+
+### Data cleaning
+
+```{python}
+import pandas as pd
+
+column_names = ["sepal_length", "sepal_width", "petal_length", "petal_width", "species"]
+
+iris = pd.read_csv(raw_path, header=None, names=column_names)
+iris = iris.dropna(how="all")
+iris["species"] = iris["species"].str.replace("Iris-", "", regex=False)
+
+iris.to_csv("../data/processed/iris_clean.csv", index=False)
+
+iris.shape
+```
+
+### Train/test split
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+train_df, test_df = train_test_split(
+    iris, test_size=0.3, stratify=iris["species"], random_state=522
+)
+
+train_df.to_csv("../data/processed/iris_train.csv", index=False)
+test_df.to_csv("../data/processed/iris_test.csv", index=False)
+
+train_df["species"].value_counts()
+```
+
+### Exploratory data analysis (training data only)
+
+```{python}
+#| label: tbl-summary
+#| tbl-cap: "Mean and standard deviation (cm) of each measurement by species in the training data."
+
+summary_table = (
+    train_df.groupby("species")
+    .agg(["mean", "std"])
+    .round(2)
+)
+summary_table
+```
+
+```{python}
+#| label: fig-distributions
+#| fig-cap: "Distribution of each flower measurement by species in the training data."
+
+import altair as alt
+
+train_long = train_df.melt(id_vars="species", var_name="measurement", value_name="cm")
+
+alt.Chart(train_long).mark_bar(opacity=0.6).encode(
+    x=alt.X("cm:Q", bin=alt.Bin(maxbins=20), title="Measurement (cm)"),
+    y=alt.Y("count():Q", stack=None, title="Number of flowers"),
+    color=alt.Color("species:N", title="Species"),
+).properties(
+    width=220, height=150
+).facet(
+    facet=alt.Facet("measurement:N", title=None), columns=2
+)
+```
+
+```{python}
+#| label: fig-petals
+#| fig-cap: "Petal length versus petal width by species in the training data."
+
+alt.Chart(train_df).mark_circle(size=60, opacity=0.6).encode(
+    x=alt.X("petal_length:Q", title="Petal length (cm)"),
+    y=alt.Y("petal_width:Q", title="Petal width (cm)"),
+    color=alt.Color("species:N", title="Species"),
+)
+```
+
+### Model comparison with cross-validation
+
+```{python}
+#| label: tbl-cv
+#| tbl-cap: "5-fold cross-validation accuracy on the training data."
+
+from sklearn.model_selection import cross_validate
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.dummy import DummyClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+
+X_train = train_df.drop(columns="species")
+y_train = train_df["species"]
+X_test = test_df.drop(columns="species")
+y_test = test_df["species"]
+
+models = {
+    "Dummy (most frequent)": DummyClassifier(strategy="most_frequent"),
+    "k-nearest neighbours": make_pipeline(StandardScaler(), KNeighborsClassifier()),
+    "Logistic regression": make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)),
+}
+
+cv_rows = []
+for name, model in models.items():
+    scores = cross_validate(model, X_train, y_train, cv=5, return_train_score=True)
+    cv_rows.append({
+        "Model": name,
+        "Mean train accuracy": round(scores["train_score"].mean(), 3),
+        "Mean validation accuracy": round(scores["test_score"].mean(), 3),
+        "SD validation accuracy": round(scores["test_score"].std(), 3),
+    })
+
+cv_results = pd.DataFrame(cv_rows)
+cv_results
 ```
 
 ## Results
 
+```{python}
+from sklearn.metrics import accuracy_score
+
+final_model = models["Logistic regression"].fit(X_train, y_train)
+test_predictions = final_model.predict(X_test)
+test_accuracy = accuracy_score(y_test, test_predictions)
+round(test_accuracy, 3)
+```
+
+```{python}
+#| label: tbl-confusion
+#| tbl-cap: "Confusion matrix of the logistic regression model on the test set."
+
+pd.crosstab(
+    y_test, test_predictions, rownames=["Actual species"], colnames=["Predicted species"]
+)
+```
+
+<!-- Nick: Results text — refer to @tbl-cv, @tbl-confusion and the test accuracy. -->
+
 ## Discussion
+
+<!-- Parva: findings vs question and expectations; assumptions, limitations, impact, future questions. -->
 
 ## References
