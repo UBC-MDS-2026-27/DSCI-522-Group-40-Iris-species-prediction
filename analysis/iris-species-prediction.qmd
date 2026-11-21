@@ -193,6 +193,12 @@ Overall, these results indicate that the four flower measurements can predict ir
 
 ## Discussion
 
-<!-- Parva: findings vs question and expectations; assumptions, limitations, impact, future questions. -->
+The results support our research question by showing that iris species can be predicted accurately using sepal and petal measurements. As expected, differences in flower measurements allowed the models to distinguish between species. Both k-nearest neighbours and logistic regression achieved 94.3% mean cross-validation accuracy, outperforming the dummy classifier's 33.3%. Logistic regression was selected because it had slightly less variation across validation folds.
+
+The final model achieved 97.8% test accuracy, correctly classifying 44 out of 45 flowers. The only error was a virginica flower classified as versicolor, consistent with the overlap between these species observed during exploratory analysis. All setosa flowers were classified correctly.
+
+One limitation is the small dataset of 150 flowers, with only 45 used for testing. The analysis also assumes that the dataset is representative of future flowers, which may not be true. The equal representation of species and use of only four measurements may potentially make the model less reliable on other datasets.
+
+Overall, the findings demonstrate that simple machine learning models can effectively classify iris species. Future work could explore hyperparameter tuning and testing on larger datasets to determine whether this performance holds for more diverse flowers.
 
 ## References
