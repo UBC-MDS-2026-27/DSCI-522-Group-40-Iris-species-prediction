@@ -99,6 +99,7 @@ The logistic regression model achieved approximately **97.8% accuracy** on the h
 The results suggest that sepal and petal measurements can be used to distinguish the three Iris species with high accuracy on this dataset. However, the dataset is small, so these results may not generalize to more diverse flower populations or measurement conditions.
 
 
+
 ## Project Structure
 
 ```text
@@ -114,7 +115,10 @@ The results suggest that sepal and petal measurements can be used to distinguish
 │       ├── iris_clean.csv
 │       ├── iris_train.csv
 │       └── iris_test.csv
+├── docs/
+│   └── index.html
 ├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
 ├── LICENSE.md
 ├── .gitignore
 ├── .python-version
@@ -123,14 +127,21 @@ The results suggest that sepal and petal measurements can be used to distinguish
 └── README.md
 ```
 
-The `docs/` directory, which will contain the published GitHub Pages report, is being prepared in a separate pull request.
+The `docs/` directory contains the HTML report published through GitHub Pages.
 
 
 ## Published Report
 
-The rendered Quarto report is available in the repository at `analysis/iris-species-prediction.html`.
+The complete Quarto report is available online through GitHub Pages:
 
-The GitHub Pages version of the report is being prepared in a separate pull request and will be linked here once it is published.
+[View the published Iris Species Prediction report](https://ubc-mds-2026-27.github.io/DSCI-522-Group-40-Iris-species-prediction/)
+
+The report includes the Summary, Introduction, Methods, Results, Discussion, visualizations, and references.
+
+The rendered HTML report is also available in the repository at `analysis/iris-species-prediction.html`.
+
+The `docs/index.html` file contains the published version of the report used by GitHub Pages.
+
 
 ## References
 
