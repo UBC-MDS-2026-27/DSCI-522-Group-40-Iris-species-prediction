@@ -16,6 +16,14 @@ execute:
 
 ## Introduction
 
+The Iris dataset contains measurements from 150 iris flowers belonging to three species: setosa, versicolor, and virginica. Each species is represented by 50 observations. For each flower, four measurements were recorded in centimetres: sepal length, sepal width, petal length, and petal width. These measurements give us a way to analyze whether these physical characteristics can distinguish between different iris species.
+
+The research question for this analysis is: Can we predict an iris flower's species from its sepal and petal measurements?
+
+To answer this question, we use supervised machine learning to classify flowers into one of the three species based on their measurements. We compare a baseline dummy classifier, k-nearest neighbours, and logistic regression using cross-validation. The best performing model is then evaluated on a held-out test set to assess how accurately it predicts the species of previously unseen flower data.
+
+This analysis shows how relatively simple classification methods can identify patterns in biological measurements. It also helps us understand which species are easier to distinguish and where classification errors may occur.
+
 ## Methods
 
 ### Data download
