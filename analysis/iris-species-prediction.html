@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Cesar Figueroa, Nick Petersen, Parva Fazeli Farsani, Qibing He">
-<meta name="dcterms.date" content="2026-11-20">
+<meta name="dcterms.date" content="2026-11-21">
 
 <title>Predicting Iris Species from Flower Measurements</title>
 <style>
@@ -60,7 +60,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+}
+.hanging-indent div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}</style>
 
 
 <script>/*! jQuery v3.5.1 | (c) JS Foundation and other contributors | jquery.org/license */
@@ -2265,7 +2284,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 20, 2026</p>
+      <p class="date">November 21, 2026</p>
     </div>
   </div>
   
@@ -2283,7 +2302,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The Iris dataset, obtained from the UCI Machine Learning Repository, contains measurements from 150 iris flowers belonging to three species: setosa, versicolor, and virginica. Each species is represented by 50 observations. For each flower, four measurements were recorded in centimetres: sepal length, sepal width, petal length, and petal width. These measurements give us a way to analyze whether these physical characteristics can distinguish between different iris species.</p>
+<p>The Iris dataset, obtained from the UCI Machine Learning Repository <span class="citation" data-cites="uci_iris">(<a href="#ref-uci_iris" role="doc-biblioref">UCI Machine Learning Repository, n.d.</a>)</span>, contains measurements from 150 iris flowers belonging to three species: setosa, versicolor, and virginica. Each species is represented by 50 observations. For each flower, four measurements were recorded in centimetres: sepal length, sepal width, petal length, and petal width. These measurements give us a way to analyze whether these physical characteristics can distinguish between different iris species. The dataset originates from research by Fisher (1936), who studied how flower measurements could be used to distinguish between iris species <span class="citation" data-cites="fisher1936">(<a href="#ref-fisher1936" role="doc-biblioref">Fisher 1936</a>)</span>.</p>
 <p>The research question for this analysis is: Can we predict an iris flower’s species from its sepal and petal measurements?</p>
 <p>To answer this question, we use supervised machine learning to classify flowers into one of the three species based on their measurements. We compare a baseline dummy classifier, k-nearest neighbours, and logistic regression using cross-validation. The best performing model is then evaluated on a held-out test set to assess how accurately it predicts the species of previously unseen flower data.</p>
 <p>This analysis shows how relatively simple classification methods can identify patterns in biological measurements. It also helps us understand which species are easier to distinguish and where classification errors may occur.</p>
@@ -2291,13 +2310,13 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <p>The Iris dataset was obtained from the UCI Machine Learning Repository and contains 150 flowers from three species: setosa, versicolor, and virginica. Each flower has four measurements in centimetres: sepal length, sepal width, petal length, and petal width. The goal is to predict the species using these measurements.</p>
-<p>The dataset was downloaded and saved locally. During cleaning, empty rows were removed and species names were simplified. The cleaned data was then divided into training (70%) and test (30%) sets using stratified sampling to keep the proportion of each species. A random seed of 522 was used for reproducibility.</p>
+<p>The dataset was downloaded and saved locally. During cleaning, empty rows were removed and species names were simplified. The cleaned data was then divided into training (70%) and test (30%) sets using stratified sampling to keep the proportion of each species. A random seed of 522 was used for reproducibility. The cleaned dataset was organized with each row representing one flower and each column representing a variable, following tidy data principles <span class="citation" data-cites="wickham2014">(<a href="#ref-wickham2014" role="doc-biblioref">Wickham 2014</a>)</span>.</p>
 <p>Exploratory data analysis was performed only on the training data to avoid data leakage. We calculated the mean and standard deviation of each measurement by species, examined their distributions using histograms, and created a scatter plot comparing petal length and width.</p>
-<p>Three classification models were compared: a dummy classifier, k-nearest neighbours (kNN), and logistic regression. The dummy classifier provided a baseline, while kNN classified flowers using their five nearest neighbours. The measurements were standardized for kNN and logistic regression using pipelines to prevent data leakage during cross-validation.</p>
+<p>Three classification models were compared using scikit-learn <span class="citation" data-cites="pedregosa2011">(<a href="#ref-pedregosa2011" role="doc-biblioref"><span class="nocase">Pedregosa et al.</span> 2011</a>)</span>: a dummy classifier, k-nearest neighbours (kNN), and logistic regression. The dummy classifier provided a baseline, while kNN classified flowers using their five nearest neighbours. The measurements were standardized for kNN and logistic regression using pipelines to prevent data leakage during cross-validation.</p>
 <p>We compared the models using five-fold cross-validation, evaluating their mean accuracy and variation across folds. Accuracy was chosen because the species are equally represented in the dataset. Logistic regression was selected because it achieved similar accuracy to kNN with less variation. Finally, the selected model was evaluated on the held-out test set using accuracy and a confusion matrix.</p>
 <section id="data-download" class="level3">
 <h3 class="anchored" data-anchor-id="data-download">Data download</h3>
-<div id="0086d228" class="cell" data-execution_count="1">
+<div id="2c7538d0" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&quot;</span></span>
@@ -2309,7 +2328,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="data-cleaning" class="level3">
 <h3 class="anchored" data-anchor-id="data-cleaning">Data cleaning</h3>
-<div id="6670439f" class="cell" data-execution_count="2">
+<div id="74971315" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>column_names <span class="op">=</span> [<span class="st">&quot;sepal_length&quot;</span>, <span class="st">&quot;sepal_width&quot;</span>, <span class="st">&quot;petal_length&quot;</span>, <span class="st">&quot;petal_width&quot;</span>, <span class="st">&quot;species&quot;</span>]</span>
@@ -2328,7 +2347,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 </section>
 <section id="traintest-split" class="level3">
 <h3 class="anchored" data-anchor-id="traintest-split">Train/test split</h3>
-<div id="e2434fa9" class="cell" data-execution_count="3">
+<div id="5b088cb4" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>train_df, test_df <span class="op">=</span> train_test_split(</span>
@@ -2461,22 +2480,22 @@ Table 1: Mean and standard deviation (cm) of each measurement by species in the
 <div aria-describedby="fig-distributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <style>
-#altair-viz-81cffda4e8824984afdf9d40fcc9e7cf.vega-embed {
+#altair-viz-f2f6df12f8334a74b01462e3962c37e5.vega-embed {
 width: 100%;
 display: flex;
 }
-#altair-viz-81cffda4e8824984afdf9d40fcc9e7cf.vega-embed details,
-#altair-viz-81cffda4e8824984afdf9d40fcc9e7cf.vega-embed details summary {
+#altair-viz-f2f6df12f8334a74b01462e3962c37e5.vega-embed details,
+#altair-viz-f2f6df12f8334a74b01462e3962c37e5.vega-embed details summary {
 position: relative;
 }
 </style>
-<div id="altair-viz-81cffda4e8824984afdf9d40fcc9e7cf"></div>
+<div id="altair-viz-f2f6df12f8334a74b01462e3962c37e5"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-81cffda4e8824984afdf9d40fcc9e7cf") {
-      outputDiv = document.getElementById("altair-viz-81cffda4e8824984afdf9d40fcc9e7cf");
+    if (outputDiv.id !== "altair-viz-f2f6df12f8334a74b01462e3962c37e5") {
+      outputDiv = document.getElementById("altair-viz-f2f6df12f8334a74b01462e3962c37e5");
     }
 
     const paths = {
@@ -2544,22 +2563,22 @@ Figure 1: Distribution of each flower measurement by species in the training da
 <div aria-describedby="fig-petals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <style>
-#altair-viz-4a4884f104f04a108e3d171a6a95ddfc.vega-embed {
+#altair-viz-5949157c17244434b1f52507b1036041.vega-embed {
 width: 100%;
 display: flex;
 }
-#altair-viz-4a4884f104f04a108e3d171a6a95ddfc.vega-embed details,
-#altair-viz-4a4884f104f04a108e3d171a6a95ddfc.vega-embed details summary {
+#altair-viz-5949157c17244434b1f52507b1036041.vega-embed details,
+#altair-viz-5949157c17244434b1f52507b1036041.vega-embed details summary {
 position: relative;
 }
 </style>
-<div id="altair-viz-4a4884f104f04a108e3d171a6a95ddfc"></div>
+<div id="altair-viz-5949157c17244434b1f52507b1036041"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4a4884f104f04a108e3d171a6a95ddfc") {
-      outputDiv = document.getElementById("altair-viz-4a4884f104f04a108e3d171a6a95ddfc");
+    if (outputDiv.id !== "altair-viz-5949157c17244434b1f52507b1036041") {
+      outputDiv = document.getElementById("altair-viz-5949157c17244434b1f52507b1036041");
     }
 
     const paths = {
@@ -2705,7 +2724,7 @@ Table 2: 5-fold cross-validation accuracy on the training data.
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<div id="edd566b1" class="cell" data-execution_count="8">
+<div id="8e52a753" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="op">=</span> models[<span class="st">&quot;Logistic regression&quot;</span>].fit(X_train, y_train)</span>
@@ -2785,11 +2804,25 @@ Table 3: Confusion matrix of the logistic regression model on the test set.
 <p>One limitation is the small dataset of 150 flowers, with only 45 used for testing. The analysis also assumes that the dataset is representative of future flowers, which may not be true. The equal representation of species and use of only four measurements may potentially make the model less reliable on other datasets.</p>
 <p>Overall, the findings demonstrate that simple machine learning models can effectively classify iris species. Future work could explore hyperparameter tuning and testing on larger datasets to determine whether this performance holds for more diverse flowers.</p>
 </section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+<section id="references" class="level2 unnumbered">
+
+
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-fisher1936" class="csl-entry" role="listitem">
+Fisher, Ronald A. 1936. <span>“The Use of Multiple Measurements in Taxonomic Problems.”</span> <em>Annals of Eugenics</em> 7 (2): 179–88. <a href="https://doi.org/10.1111/j.1469-1809.1936.tb02137.x">https://doi.org/10.1111/j.1469-1809.1936.tb02137.x</a>.
+</div>
+<div id="ref-pedregosa2011" class="csl-entry" role="listitem">
+<span class="nocase">Pedregosa, Fabian et al.</span> 2011. <span>“Scikit-Learn: Machine Learning in Python.”</span> <em>Journal of Machine Learning Research</em> 12: 2825–30. <a href="https://jmlr.org/papers/v12/pedregosa11a.html">https://jmlr.org/papers/v12/pedregosa11a.html</a>.
+</div>
+<div id="ref-uci_iris" class="csl-entry" role="listitem">
+UCI Machine Learning Repository. n.d. <em>Iris</em>. <a href="https://archive.ics.uci.edu/dataset/53/iris">https://archive.ics.uci.edu/dataset/53/iris</a>.
+</div>
+<div id="ref-wickham2014" class="csl-entry" role="listitem">
+Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical Software</em> 59 (10): 1–23. <a href="https://doi.org/10.18637/jss.v059.i10">https://doi.org/10.18637/jss.v059.i10</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
