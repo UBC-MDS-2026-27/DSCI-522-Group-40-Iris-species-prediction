@@ -14,7 +14,7 @@ execute:
 
 ## Summary
 
-<!-- Qibing: one paragraph — question, findings, significance, limitations. Write last. -->
+This project investigates whether iris flower species can be predicted from four sepal and petal measurements using supervised machine learning. Using the Iris dataset containing 150 observations across three species, we compared a dummy classifier, k-nearest neighbours, and logistic regression. Both k-nearest neighbours and logistic regression achieved approximately 94.3% mean accuracy during five-fold cross-validation. Logistic regression was selected for final evaluation because its cross-validation performance was slightly more consistent. On the held-out test set of 45 observations, logistic regression achieved 97.8% accuracy, correctly classifying 44 flowers. The only misclassification involved a virginica flower predicted as versicolor. These results suggest that simple classification models can distinguish iris species effectively using physical measurements. However, the small dataset and evaluation using a single train-test split limit how confidently these results can be generalized to other populations or measurement conditions.
 
 ## Introduction
 
