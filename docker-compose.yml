@@ -1,0 +1,20 @@
+# Adapted from docker-uv-renv by Daniel Chen (MIT License)
+# https://github.com/chendaniely/docker-uv-renv
+
+services:
+  # the service name: `docker compose run analysis-env ...` uses it
+  analysis-env:
+    # Docker Hub username / this GitHub repository's name in lowercase,
+    # with the sha- tag the workflow pushed (not latest).
+    # The workflow updates this tag for you from now on.
+    image: cesarfs09/dsci-522-group-40-iris-species-prediction:sha-0f2f067
+    ports:
+      # 2222 on your computer, 22 (ssh) in the container
+      - "2222:22"
+    volumes:
+      # your project folder, at /workspace in the container
+      - .:/workspace
+      # your ssh public key, so you can log in (ro: read-only)
+      - ~/.ssh/id_ed25519.pub:/root/.ssh/authorized_keys:ro
+      # your Git name and email, so your commits in the container count as yours
+      - ~/.gitconfig:/root/.gitconfig:ro
