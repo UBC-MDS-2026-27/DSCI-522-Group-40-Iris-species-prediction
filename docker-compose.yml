@@ -7,7 +7,7 @@ services:
     # Docker Hub username / this GitHub repository's name in lowercase,
     # with the sha- tag the workflow pushed (not latest).
     # The workflow updates this tag for you from now on.
-    image: cesarfs09/dsci-522-group-40-iris-species-prediction:sha-0f2f067
+    image: cesarfs09/dsci-522-group-40-iris-species-prediction:sha-11ba000
     ports:
       # 2222 on your computer, 22 (ssh) in the container
       - "2222:22"
