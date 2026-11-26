@@ -46,6 +46,24 @@ Make sure Docker Desktop is running before continuing.
 
 The Docker Compose configuration also requires an SSH public key at `~/.ssh/id_ed25519.pub` and a Git configuration file at `~/.gitconfig`. Both files must exist before starting the container.
 
+SSH key setup
+
+The Docker environment requires an SSH public key at ~/.ssh/id_ed25519.pub.
+
+If you do not already have an SSH key, generate one using:
+
+ssh-keygen -t ed25519
+
+Press Enter to accept the default file location (~/.ssh/id_ed25519) and follow the prompts to configure an optional passphrase.
+
+If an SSH key already exists at that location, do not overwrite it.
+
+You can verify that your public key exists by running:
+
+ls ~/.ssh/id_ed25519.pub
+
+The Docker Compose configuration also requires a Git configuration file at ~/.gitconfig. If it does not exist, configure your Git name and email using git config --global user.name and git config --global user.email with your own values.
+
 ### Clone the repository
 
 Open Terminal and run:
@@ -105,6 +123,18 @@ Start-Process analysis/iris-species-prediction.html
 ```
 
 The report includes exploratory visualizations, cross-validation results, and final model evaluation.
+
+Running the report in a temporary container
+
+Alternatively, you can render the report using a temporary Docker container:
+
+docker compose run --rm analysis-env uv run quarto render analysis/iris-species-prediction.qmd --to html
+
+The --rm flag automatically removes the temporary container after the command finishes, so you do not need to manually remove it.
+
+This differs from docker compose up -d, which starts a persistent container that you can stop and remove later using docker compose down.
+
+For additional development instructions, see CONTRIBUTING.md.
 
 ## Stopping the Docker Environment
 
