@@ -33,34 +33,55 @@ The final logistic regression model is evaluated on the held-out test set using 
 
 ## Installation
 
-To reproduce this analysis, you will need:
+This project uses Docker to provide a reproducible environment for running the Iris Species Prediction analysis. Docker includes the required Python dependencies and Quarto, so users do not need to install them separately.
+
+### Prerequisites
+
+Install the following software:
 
 - [Git](https://git-scm.com/downloads)
-- Python 3.13 or newer
-- [uv](https://docs.astral.sh/uv/getting-started/installation/)
-- [Quarto](https://quarto.org/docs/get-started/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+Make sure Docker Desktop is running before continuing.
+
+The Docker Compose configuration also requires an SSH public key at `~/.ssh/id_ed25519.pub` and a Git configuration file at `~/.gitconfig`. Both files must exist before starting the container.
 
 ### Clone the repository
 
-Open Terminal (macOS/Linux) or PowerShell (Windows) and run:
+Open Terminal and run:
 
 ```bash
 git clone https://github.com/UBC-MDS-2026-27/DSCI-522-Group-40-Iris-species-prediction.git
 cd DSCI-522-Group-40-Iris-species-prediction
 ```
 
-### Install dependencies
+### Start the Docker environment
 
 From the repository's root directory, run:
 
 ```bash
-uv sync --locked
+docker compose pull
+docker compose up -d
 ```
 
-This creates the project's virtual environment and installs the Python dependencies specified in `pyproject.toml` and `uv.lock`.
+These commands download the project's Docker image from Docker Hub and start the container in the background.
 
-The main Python dependencies include pandas, scikit-learn, Altair, and Jupyter.
+The repository is mounted at `/workspace` inside the container, so changes to project files are accessible both locally and inside Docker.
 
+### Verify the environment
+
+Check that Python and Quarto are available inside the container:
+
+```bash
+docker compose exec analysis-env uv run python --version
+docker compose exec analysis-env quarto --version
+```
+
+You can also verify the main Python dependencies:
+
+```bash
+docker compose exec analysis-env uv run python -c "import pandas, sklearn, altair; print('All packages installed successfully!')"
+```
 ## Reproducing the Analysis
 
 After installing the dependencies, run the Quarto report from the repository's root directory.
