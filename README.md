@@ -84,35 +84,43 @@ docker compose exec analysis-env uv run python -c "import pandas, sklearn, altai
 ```
 ## Reproducing the Analysis
 
-After installing the dependencies, run the Quarto report from the repository's root directory.
-
-### macOS / Linux
-
-Run:
+After starting the Docker environment, render the Quarto report from the repository's root directory:
 
 ```bash
-QUARTO_PYTHON="$(pwd)/.venv/bin/python3" quarto render analysis/iris-species-prediction.qmd --to html
+docker compose exec analysis-env uv run quarto render analysis/iris-species-prediction.qmd --to html
 ```
 
-### Windows (PowerShell)
+This executes the analysis inside the Docker container and generates the HTML report at `analysis/iris-species-prediction.html`.
 
-Run:
+To view the report on macOS, run:
+
+```bash
+open analysis/iris-species-prediction.html
+```
+
+On Windows, open the report using PowerShell:
 
 ```powershell
-$env:QUARTO_PYTHON = (Resolve-Path ".venv\Scripts\python.exe").Path
-quarto render analysis/iris-species-prediction.qmd --to html
+Start-Process analysis/iris-species-prediction.html
 ```
 
-### Output
+The report includes exploratory visualizations, cross-validation results, and final model evaluation.
 
-The rendered report will be saved to:
+## Stopping the Docker Environment
 
-`analysis/iris-species-prediction.html`
+When you have finished working, stop and remove the project's containers and network:
 
-Open the HTML file in a web browser to view the analysis, visualizations, and results.
+```bash
+docker compose down
+```
 
-**Note:** The repository setup and complete Quarto report rendering have been successfully tested on both macOS and Windows.
+This does not delete the project files or generated reports stored in your local repository.
 
+To restart the environment later, run:
+
+```bash
+docker compose up -d
+```
 ## Results
 
 The logistic regression model achieved approximately **97.8% accuracy** on the held-out test set, correctly classifying 44 out of 45 observations.
