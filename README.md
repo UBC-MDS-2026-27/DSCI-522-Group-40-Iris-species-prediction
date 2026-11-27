@@ -134,7 +134,7 @@ The --rm flag automatically removes the temporary container after the command fi
 
 This differs from docker compose up -d, which starts a persistent container that you can stop and remove later using docker compose down.
 
-For additional development instructions, see CONTRIBUTING.md.
+For additional development instructions, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Stopping the Docker Environment
 
