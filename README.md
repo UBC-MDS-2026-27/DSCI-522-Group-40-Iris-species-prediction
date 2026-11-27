@@ -151,6 +151,13 @@ To restart the environment later, run:
 ```bash
 docker compose up -d
 ```
+### Troubleshooting on macOS
+
+If rendering the report inside Docker fails with `OSError: [Errno 35] Resource deadlock avoided`, one possible cause is that project files are stored in iCloud Drive but are not downloaded locally.
+
+Right-click the project folder in Finder, select **Download Now** or **Keep Downloaded**, and retry the rendering command once the files are available locally.
+
+This solution was successfully tested during reproducibility testing on macOS.
 ## Results
 
 The logistic regression model achieved approximately **97.8% accuracy** on the held-out test set, correctly classifying 44 out of 45 observations.
