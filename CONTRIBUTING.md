@@ -21,14 +21,57 @@ git switch -c fix-report-caption
 
 Keep the change focused on its issue. Check the output before committing, stage the intended files, and use a commit message that describes the change. Push to your branch and use a pull request to bring the changes into `main`.
 
-For a change that affects the analysis or report, run these commands from the repository root on macOS with uv and Quarto installed.
+For a documentation-only change, preview the Markdown and check any edited links or commands. For changes to the analysis or report, follow the report publishing steps below.
+
+## Develop in the Docker container
+
+Install [Positron](https://positron.posit.co/download.html) and follow the [README installation steps](README.md#installation) to set up Docker, check your SSH public key and Git configuration, and pull the project image. Positron includes Remote SSH.
+
+1. In a terminal on your computer, run `docker compose up -d` from the repository root. Run `docker compose ps` and confirm that `analysis-env` is running.
+2. In Positron, open the Command Palette (`Cmd+Shift+P` on macOS or `Ctrl+Shift+P` on Windows and Linux). Run **Remote SSH: Show Remote Menu**, choose **Connect to Host**, and enter `root@localhost:2222`. If prompted for the remote platform, select **Linux**. The first connection may take a few minutes while Positron sets up its remote server.
+3. In the new window, check that the status bar shows `SSH: localhost:2222`. Choose **File → Open Folder** and open `/workspace`. Changes made there are saved to your local checkout.
+4. Run **Python: Select Interpreter** and choose `/opt/venv/bin/python`. If the interpreter is missing from the list, choose **Enter interpreter path...** and enter `/opt/venv/bin/python`. In the Python Console, run `import sys; print(sys.executable)` and confirm that it prints `/opt/venv/bin/python`.
+5. In the Positron Terminal, run `git config --get user.name` and `git config --get user.email`. Compose mounts your computer's `~/.gitconfig` into the container. If either value is missing, follow the Git configuration steps in the README on your computer and check again.
+
+When you finish, close the remote Positron window and run `docker compose down` from the repository root on your computer.
+
+### Troubleshoot the SSH connection
+
+- **Connection refused or port already in use.** Run `docker compose ps` to check that `analysis-env` is running. If port `2222` is in use, free it or change the host port in your local Compose configuration and connect to that port.
+- **SSH asks for a password.** Check that `~/.ssh/id_ed25519.pub` exists as a file and that your SSH client uses its matching private key. If Docker created an empty directory at the public key or `.gitconfig` path, stop the container, remove that empty directory, and follow the README setup steps before starting again.
+- **Host key changed after replacing the container.** Once you have confirmed that you replaced the local container, run `ssh-keygen -R '[localhost]:2222'` on your computer and reconnect.
+- **SSH rejects the mounted public key on Linux.** See the [course guide for Linux hosts](https://ubc-mds.github.io/DSCI_522_dsci-workflows_students/assignments/milestone2.html#positron-ssh).
+- **GitHub authentication fails when pushing from the container.** Push from your computer's terminal using your existing GitHub credentials. The two terminals share the same checkout.
+
+## Add or update a Python dependency
+
+Start from an up-to-date `main` on a separate branch. In the Positron Terminal at `/workspace`, run `uv add 'PACKAGE==VERSION'`, replacing `PACKAGE` and `VERSION` with the dependency name and exact version. Review the changes to `pyproject.toml` and `uv.lock`, then commit both files together. Push the branch from your computer and set its upstream if this is the first push (`git push -u origin <branch-name>`).
+
+A push that changes `uv.lock` triggers GitHub Actions to build and publish an updated Docker image for `linux/amd64` and `linux/arm64`. The workflow commits the new `sha-` image tag to `docker-compose.yml` on your branch. Once the workflow succeeds, run these commands from the repository root on your computer:
 
 ```bash
-uv sync --locked
-QUARTO_PYTHON="$(pwd)/.venv/bin/python3" quarto render analysis/iris-species-prediction.qmd --to html
+git pull --ff-only
+docker compose pull
+docker compose up -d
 ```
 
-Open the rendered HTML and check that the sections, tables, and plots affected by your change still look right. For a documentation-only change, preview the Markdown and check edited links or commands.
+Reconnect Positron and test the change with the updated image before requesting review. After the PR merges and the publishing workflow succeeds on `main`, teammates should pull `main` and run `docker compose pull` again. Run `docker compose up -d` to use the new image for the next development session.
+
+## Republish the report
+
+From the repository root on your computer, re-render the report inside the container:
+
+```bash
+docker compose run --rm analysis-env uv run quarto render analysis/iris-species-prediction.qmd --to html
+```
+
+Once rendering succeeds, copy the self-contained HTML report to the file served by GitHub Pages:
+
+```bash
+cp analysis/iris-species-prediction.html docs/index.html
+```
+
+Open `docs/index.html` and check the updated sections, tables, and figures. Commit `analysis/iris-species-prediction.html` and `docs/index.html` with the relevant source changes, then push your branch and open a pull request. After the PR merges and GitHub Pages deploys, check that the [published report](README.md#published-report) shows the update. If rendering fails with a resource deadlock on macOS, follow the [README troubleshooting steps](README.md#troubleshooting-on-macos).
 
 ## Open a pull request and request review
 
